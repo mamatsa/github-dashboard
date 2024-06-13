@@ -27,13 +27,8 @@ export default async function Page({ params }: { params: { pull: string } }) {
     }
   );
 
-  console.log(
-    "----------------------------------------------------------------------"
-  );
-  console.log(prDetails.data);
-
   return (
-    <div className="p-10">
+    <>
       <h1 className="text-2xl font-bold mb-3">Pull Request #{params.pull}</h1>
 
       {/* Display PR title and body */}
@@ -66,6 +61,6 @@ export default async function Page({ params }: { params: { pull: string } }) {
           Go back
         </Link>
       </div>
-    </div>
+    </>
   );
 }

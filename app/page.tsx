@@ -13,11 +13,8 @@ export default async function Home() {
     repo: "test-repo",
   });
 
-  console.log(111111111111111111111111111111111111);
-  console.log(response.data);
-
   return (
-    <main className="p-10">
+    <>
       <h1 className="text-2xl font-bold mb-5">
         Pull requests ({response.data.length})
       </h1>
@@ -47,6 +44,6 @@ export default async function Home() {
           </div>
         </Link>
       ))}
-    </main>
+    </>
   );
 }
