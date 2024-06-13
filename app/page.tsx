@@ -12,6 +12,7 @@ export default async function Home() {
   const response = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
     owner: "mamatsa",
     repo: "test-repo",
+    state: "all",
   });
 
   // Count how many tokens are in the response body
@@ -19,6 +20,8 @@ export default async function Home() {
     const tokensMatch = body.match(/- Number of tokens\s*:?\s*(\d+)/);
     return tokensMatch ? parseInt(tokensMatch[1], 10) : 0;
   };
+
+  console.log(response.data);
 
   // Count how many minutes passed since comment was created
   const timePassed = (date: string) => {
@@ -44,7 +47,11 @@ export default async function Home() {
         >
           <div className="flex items-center gap-4">
             <h2 className="font-semibold text-lg">{pr.title}</h2>
-            <p className=" bg-green-400 px-3 py-0.5 rounded-xl text-white text-sm">
+            <p
+              className={`px-3 py-0.5 rounded-xl text-white text-sm ${
+                pr.state === "open" ? "bg-green-400" : "bg-slate-400"
+              }`}
+            >
               {pr.state}
             </p>
           </div>
