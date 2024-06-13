@@ -4,9 +4,7 @@ import Link from "next/link";
 export const revalidate = 0;
 
 export default async function Home() {
-  const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-  });
+  const octokit = new Octokit({});
 
   // Fetch repository pull requests
   const response = await octokit.request("GET /repos/{owner}/{repo}/pulls", {

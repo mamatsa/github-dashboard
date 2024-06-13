@@ -5,9 +5,7 @@ export const revalidate = 0;
 
 export default async function Page({ params }: { params: { pull: string } }) {
   // Fetch pull request comments
-  const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-  });
+  const octokit = new Octokit({});
 
   // Fetch pull request details
   const prDetails = await octokit.request(
