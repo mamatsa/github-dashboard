@@ -1,5 +1,6 @@
 import { Octokit } from "octokit";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Home() {
   const octokit = new Octokit({
@@ -12,13 +13,20 @@ export default async function Home() {
     repo: "test-repo",
   });
 
+  console.log(111111111111111111111111111111111111);
+  console.log(response.data);
+
   return (
     <main className="p-10">
       <h1 className="text-2xl font-bold mb-5">
         Pull requests ({response.data.length})
       </h1>
       {response.data.map((pr) => (
-        <div key={pr.id} className="border p-5 flex gap-3 items-center my-3">
+        <Link
+          href={`/comments/${pr.number}`}
+          key={pr.id}
+          className="border p-5 flex gap-3 items-center my-3"
+        >
           {/* Display user name and avatar */}
           <div>
             <h3 className="text-sm opacity-50">{pr.user?.login}</h3>
@@ -37,7 +45,7 @@ export default async function Home() {
             <h2 className="font-semibold">{pr.title}</h2>
             <p>{pr.body}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </main>
   );
