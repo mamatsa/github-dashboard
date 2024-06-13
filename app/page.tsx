@@ -2,6 +2,8 @@ import { Octokit } from "octokit";
 import Image from "next/image";
 import Link from "next/link";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
@@ -12,6 +14,14 @@ export default async function Home() {
     owner: "mamatsa",
     repo: "test-repo",
   });
+
+  // Count how many tokens are in the response body
+  const extraxtTokens = (body: string) => {
+    const tokensMatch = body.match(/- Number of tokens: (\d+)/);
+    return tokensMatch ? parseInt(tokensMatch[1], 10) : 0;
+  };
+
+  console.log(response.data);
 
   return (
     <>
@@ -40,10 +50,19 @@ export default async function Home() {
           {/* Display PR title and body */}
           <div>
             <h2 className="font-semibold">{pr.title}</h2>
-            <p>{pr.body}</p>
+            <p>Number of tokens: {extraxtTokens(pr.body || "")}</p>
           </div>
         </Link>
       ))}
+
+      {/* Sum of tokens */}
+      <p className="text-lg font-semibold">
+        Total number of tokens:{" "}
+        {response.data.reduce(
+          (acc, pr) => acc + extraxtTokens(pr.body || ""),
+          0
+        )}
+      </p>
     </>
   );
 }

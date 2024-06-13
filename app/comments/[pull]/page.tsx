@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Octokit } from "octokit";
 
+export const revalidate = 0;
+
 export default async function Page({ params }: { params: { pull: string } }) {
   // Fetch pull request comments
   const octokit = new Octokit({
