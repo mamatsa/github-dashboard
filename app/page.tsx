@@ -6,7 +6,7 @@ export const revalidate = 0;
 export default async function Home() {
   const pullRequests = await fetchRepositoryPullRequests(
     "mamatsa",
-    "test-repo",
+    "sample-proposals",
     "all"
   );
 

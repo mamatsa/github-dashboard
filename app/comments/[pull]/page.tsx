@@ -11,14 +11,14 @@ export default async function Page({ params }: { params: { pull: string } }) {
   // Fetch pull request details
   const prDetails = await fetchPullRequestDetails(
     "mamatsa",
-    "test-repo",
+    "sample-proposals",
     +params.pull
   );
 
   // Fetch pull request comments
   const prComments = await fetchPullRequestComments(
     "mamatsa",
-    "test-repo",
+    "sample-proposals",
     +params.pull
   );
 
