@@ -1,1 +1,2 @@
-export * from "./timeUtils";
+export * from "./time";
+export * from "./octokit";

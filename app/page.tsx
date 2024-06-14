@@ -1,18 +1,14 @@
-import { Octokit } from "octokit";
 import Link from "next/link";
-import { timePassed } from "./utils";
+import { timePassed, fetchRepositoryPullRequests } from "@/app/utils";
 
 export const revalidate = 0;
 
 export default async function Home() {
-  const octokit = new Octokit({});
-
-  // Fetch repository pull requests
-  const response = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
-    owner: "mamatsa",
-    repo: "test-repo",
-    state: "all",
-  });
+  const pullRequests = await fetchRepositoryPullRequests(
+    "mamatsa",
+    "test-repo",
+    "all"
+  );
 
   // Count how many tokens are in the response body
   const extraxtTokens = (body: string) => {
@@ -23,9 +19,9 @@ export default async function Home() {
   return (
     <>
       <h1 className="text-2xl font-bold mb-5">
-        Pull requests ({response.data.length})
+        Pull requests ({pullRequests.length})
       </h1>
-      {response.data.map((pr) => (
+      {pullRequests.map((pr) => (
         <Link
           href={`/comments/${pr.number}`}
           key={pr.id}
@@ -51,7 +47,7 @@ export default async function Home() {
       {/* Sum of tokens */}
       <p className="text-lg font-semibold">
         Total number of tokens:{" "}
-        {response.data.reduce(
+        {pullRequests.reduce(
           (acc, pr) => acc + extraxtTokens(pr.body || ""),
           0
         )}

@@ -1,31 +1,25 @@
 import Link from "next/link";
-import { Octokit } from "octokit";
-import { timePassed } from "@/app/utils";
+import {
+  timePassed,
+  fetchPullRequestDetails,
+  fetchPullRequestComments,
+} from "@/app/utils";
 
 export const revalidate = 0;
 
 export default async function Page({ params }: { params: { pull: string } }) {
-  // Fetch pull request comments
-  const octokit = new Octokit({});
-
   // Fetch pull request details
-  const prDetails = await octokit.request(
-    "GET /repos/{owner}/{repo}/pulls/{pull_number}",
-    {
-      owner: "mamatsa",
-      repo: "test-repo",
-      pull_number: +params.pull,
-    }
+  const prDetails = await fetchPullRequestDetails(
+    "mamatsa",
+    "test-repo",
+    +params.pull
   );
 
   // Fetch pull request comments
-  const prComments = await octokit.request(
-    "GET /repos/{owner}/{repo}/issues/{issue_number}/comments",
-    {
-      owner: "mamatsa",
-      repo: "test-repo",
-      issue_number: +params.pull,
-    }
+  const prComments = await fetchPullRequestComments(
+    "mamatsa",
+    "test-repo",
+    +params.pull
   );
 
   return (
@@ -36,17 +30,16 @@ export default async function Page({ params }: { params: { pull: string } }) {
       <div className="mb-5 text-lg">
         <p>
           <span className="font-semibold ">Title: </span>
-          {prDetails.data.title}
+          {prDetails.title}
         </p>
         <p>
-          <span className="font-semibold">Description:</span>{" "}
-          {prDetails.data.body}
+          <span className="font-semibold">Description:</span> {prDetails.body}
         </p>
       </div>
 
       {/* Display comments */}
       <h2 className="font-bold text-lg">Comments</h2>
-      {prComments.data.map((comment) => (
+      {prComments.map((comment) => (
         <div key={comment.id} className="border mb-3 mt-2 px-3 py-2">
           {/* Comment author and time */}
           <div className="flex items-center gap-2 mb-1">
