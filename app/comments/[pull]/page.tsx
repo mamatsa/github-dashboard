@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Octokit } from "octokit";
+import { timePassed } from "@/app/utils";
 
 export const revalidate = 0;
 
@@ -26,17 +27,6 @@ export default async function Page({ params }: { params: { pull: string } }) {
       issue_number: +params.pull,
     }
   );
-
-  // Count how many minutes passed since comment was created
-  const timePassed = (date: string) => {
-    const created = new Date(date);
-    const now = new Date();
-    const diff = now.getTime() - created.getTime();
-    const minutesPassed = Math.floor(diff / (1000 * 60));
-    return minutesPassed > 60
-      ? `${Math.floor(minutesPassed / 60)} hours ago`
-      : `${minutesPassed} minutes ago`;
-  };
 
   return (
     <>

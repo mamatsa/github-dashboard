@@ -1,5 +1,6 @@
 import { Octokit } from "octokit";
 import Link from "next/link";
+import { timePassed } from "./utils";
 
 export const revalidate = 0;
 
@@ -17,19 +18,6 @@ export default async function Home() {
   const extraxtTokens = (body: string) => {
     const tokensMatch = body.match(/- Number of tokens\s*:?\s*(\d+)/);
     return tokensMatch ? parseInt(tokensMatch[1], 10) : 0;
-  };
-
-  console.log(response.data);
-
-  // Count how many minutes passed since comment was created
-  const timePassed = (date: string) => {
-    const created = new Date(date);
-    const now = new Date();
-    const diff = now.getTime() - created.getTime();
-    const minutesPassed = Math.floor(diff / (1000 * 60));
-    return minutesPassed > 60
-      ? `${Math.floor(minutesPassed / 60)} hours ago`
-      : `${minutesPassed} minutes ago`;
   };
 
   return (
@@ -55,8 +43,7 @@ export default async function Home() {
           </div>
           <p>Number of tokens: {extraxtTokens(pr.body || "")}</p>
           <p className="text-xs opacity-50 mt-1">
-            #{pr.number} opened {timePassed(pr.created_at)} ago by{" "}
-            {pr.user?.login}
+            #{pr.number} opened {timePassed(pr.created_at)} by {pr.user?.login}
           </p>
         </Link>
       ))}
