@@ -1,8 +1,5 @@
 import { Octokit } from "octokit";
-
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
-});
+import { auth } from "@/auth";
 
 // Fetch repository pull requests
 export const fetchRepositoryPullRequests = async (
@@ -11,6 +8,12 @@ export const fetchRepositoryPullRequests = async (
   state: "open" | "closed" | "all" = "all"
 ) => {
   try {
+    let session = await auth();
+
+    const octokit = new Octokit({
+      auth: session?.accessToken,
+    });
+
     const response = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
       owner,
       repo,
@@ -30,6 +33,12 @@ export const fetchPullRequestDetails = async (
   pull_number: number
 ) => {
   try {
+    let session = await auth();
+
+    const octokit = new Octokit({
+      auth: session?.accessToken,
+    });
+
     const response = await octokit.request(
       "GET /repos/{owner}/{repo}/pulls/{pull_number}",
       {
@@ -52,6 +61,12 @@ export const fetchPullRequestComments = async (
   issue_number: number
 ) => {
   try {
+    let session = await auth();
+
+    const octokit = new Octokit({
+      auth: session?.accessToken,
+    });
+
     const response = await octokit.request(
       "GET /repos/{owner}/{repo}/issues/{issue_number}/comments",
       {
