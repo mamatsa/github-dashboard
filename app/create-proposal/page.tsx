@@ -1,29 +1,12 @@
-import { createPullRequest } from "@/app/utils";
-import { redirect } from "next/navigation";
 import Link from "next/link";
+import { submitProposal } from "./actions";
+import { SubmitButton } from "./components/SubmitButton";
 
 export default function CreateProposal() {
   return (
     <div>
       <h1 className="text-2xl font-semibold">Create Proposal</h1>
-      <form
-        action={async (formData: FormData) => {
-          "use server";
-          try {
-            await createPullRequest({
-              branchName: formData.get("branch") as string,
-              newFileContent: formData.get("content") as string,
-              pullRequestDescription: formData.get("description") as string,
-              pullRequestTitle: formData.get("title") as string,
-            });
-
-            // redirect to home page
-            redirect("/");
-          } catch (e) {
-            console.log(e);
-          }
-        }}
-      >
+      <form action={submitProposal}>
         <div className="flex flex-col gap-4 mt-4">
           <label htmlFor="branch">
             Branch Name{" "}
@@ -85,9 +68,7 @@ export default function CreateProposal() {
         </div>
 
         <div className="flex justify-between items-center mt-1">
-          <button className="bg-blue-500 px-3 py-2 text-white mt-4">
-            Create Proposal
-          </button>
+          <SubmitButton />
           <Link
             href="/"
             className="cursor-pointer border px-3 py-2 hover:bg-slate-200"
