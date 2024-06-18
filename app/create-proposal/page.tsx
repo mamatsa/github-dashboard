@@ -1,5 +1,6 @@
 import { createPullRequest } from "@/app/utils";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default function CreateProposal() {
   return (
@@ -83,9 +84,17 @@ export default function CreateProposal() {
           ></textarea>
         </div>
 
-        <button className="bg-blue-500 px-3 py-2 text-white mt-4">
-          Create Proposal
-        </button>
+        <div className="flex justify-between items-center mt-1">
+          <button className="bg-blue-500 px-3 py-2 text-white mt-4">
+            Create Proposal
+          </button>
+          <Link
+            href="/"
+            className="cursor-pointer border px-3 py-2 hover:bg-slate-200"
+          >
+            Go back
+          </Link>{" "}
+        </div>
       </form>
     </div>
   );
