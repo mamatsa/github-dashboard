@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { timePassed, fetchRepositoryPullRequests } from "@/app/utils";
+import { auth } from "@/auth";
 
 export const revalidate = 0;
 
 export default async function Home() {
+  let session = await auth();
+
   const pullRequests = await fetchRepositoryPullRequests(
     "mamatsa",
     "sample-proposals",
@@ -18,9 +21,21 @@ export default async function Home() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-5">
-        Pull requests ({pullRequests.length})
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold mb-5">
+          Pull requests ({pullRequests.length})
+        </h1>
+        {session?.accessToken && (
+          <Link
+            href="/create-proposal"
+            className="bg-blue-500 px-3 py-2 text-white"
+          >
+            Add New Proposal
+          </Link>
+        )}
+      </div>
+
+      {/* List of pull requests */}
       {pullRequests.map((pr) => (
         <Link
           href={`/comments/${pr.number}`}
