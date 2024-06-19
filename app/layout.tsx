@@ -59,7 +59,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="w-full px-4 max-w-screen-2xl mx-auto sm:px-10 sm:py-6">
+        <header className="w-full p-4 max-w-screen-2xl mx-auto sm:px-10 sm:py-6">
           <div>
             {user && !sessionIsExpired ? (
               <SignOut>{`Welcome, ${user}`}</SignOut>
