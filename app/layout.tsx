@@ -51,6 +51,9 @@ export default async function RootLayout({
 }>) {
   let session = await auth();
   let user = session?.user?.name;
+  let sessionIsExpired =
+    session?.expires && session.expires < new Date().toISOString();
+
   console.log(session);
 
   return (
@@ -58,12 +61,16 @@ export default async function RootLayout({
       <body className={inter.className}>
         <header className="w-full px-4 max-w-screen-2xl mx-auto sm:px-10 sm:py-6">
           <div>
-            {user ? <SignOut>{`Welcome, ${user}`}</SignOut> : <SignIn />}
+            {user && !sessionIsExpired ? (
+              <SignOut>{`Welcome, ${user}`}</SignOut>
+            ) : (
+              <SignIn />
+            )}
           </div>
           <div className="w-full h-px bg-slate-300 mt-5"></div>
         </header>
 
-        {user && (
+        {user && !sessionIsExpired && (
           <main className="p-4 max-w-screen-2xl mx-auto sm:px-10">
             {children}
           </main>
