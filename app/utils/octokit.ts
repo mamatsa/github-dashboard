@@ -83,17 +83,17 @@ export const fetchPullRequestComments = async (
 };
 
 // Create a new pull request
-export const createPullRequest = async ({
+export async function createPullRequest({
   branchName,
+  newFileContent,
   pullRequestTitle,
   pullRequestDescription,
-  newFileContent,
 }: {
   branchName: string;
+  newFileContent: string;
   pullRequestTitle: string;
   pullRequestDescription: string;
-  newFileContent: string;
-}) => {
+}) {
   let session = await auth();
 
   const octokit = new Octokit({
@@ -102,106 +102,94 @@ export const createPullRequest = async ({
 
   const owner = "mamatsa";
   const repo = "sample-proposals";
-  const baseBranch = "main";
   const newFilePath = "proposal.md";
 
   try {
-    // Get the reference (SHA) of the main branch
-    const { data: mainRefData } = await octokit.rest.git.getRef({
-      owner,
-      repo,
-      ref: `heads/${baseBranch}`,
+    // Step 1: Check if the repository is already forked
+    let forkOwner: string;
+    let forkRepo: string;
+
+    try {
+      const forkResponse = await octokit.rest.repos.get({
+        owner: "authenticated_user", // Change to the authenticated user's GitHub username
+        repo,
+      });
+
+      forkOwner = forkResponse.data.owner.login;
+      forkRepo = forkResponse.data.name;
+    } catch (error) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "status" in error &&
+        error.status === 404
+      ) {
+        // Repository is not forked yet, so we fork it
+        const forkResponse = await octokit.rest.repos.createFork({
+          owner,
+          repo,
+        });
+
+        forkOwner = forkResponse.data.owner.login;
+        forkRepo = forkResponse.data.name;
+
+        // Wait for the fork to be ready
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+      } else {
+        throw error;
+      }
+    }
+
+    // Step 2: Get the default branch of the forked repository
+    const {
+      data: { default_branch: defaultBranch },
+    } = await octokit.rest.repos.get({
+      owner: forkOwner,
+      repo: forkRepo,
     });
 
-    const mainSha = mainRefData.object.sha;
+    // Step 3: Get the reference to the default branch
+    const {
+      data: {
+        object: { sha: baseSha },
+      },
+    } = await octokit.rest.git.getRef({
+      owner: forkOwner,
+      repo: forkRepo,
+      ref: `heads/${defaultBranch}`,
+    });
 
-    // Create a new branch from the main branch
+    // Step 4: Create a new branch in the forked repository
     await octokit.rest.git.createRef({
-      owner,
-      repo,
+      owner: forkOwner,
+      repo: forkRepo,
       ref: `refs/heads/${branchName}`,
-      sha: mainSha,
+      sha: baseSha,
     });
 
-    // Get the SHA of the new branch
-    const { data: newBranchRefData } = await octokit.rest.git.getRef({
-      owner,
-      repo,
-      ref: `heads/${branchName}`,
-    });
-
-    const newBranchSha = newBranchRefData.object.sha;
-
-    // Create a blob for the new file content
-    const { data: blobData } = await octokit.rest.git.createBlob({
-      owner,
-      repo,
+    // Step 5: Create or update a file in the new branch
+    await octokit.rest.repos.createOrUpdateFileContents({
+      owner: forkOwner,
+      repo: forkRepo,
+      path: newFilePath,
+      message: `Adding new file for PR: ${pullRequestTitle}`,
       content: Buffer.from(newFileContent).toString("base64"),
-      encoding: "base64",
+      branch: branchName,
     });
 
-    const blobSha = blobData.sha;
-
-    // Get the latest commit on the new branch
-    const { data: commitData } = await octokit.rest.git.getCommit({
-      owner,
-      repo,
-      commit_sha: newBranchSha,
-    });
-
-    const treeSha = commitData.tree.sha;
-
-    // Create a new tree including the new file
-    const { data: newTreeData } = await octokit.rest.git.createTree({
-      owner,
-      repo,
-      base_tree: treeSha,
-      tree: [
-        {
-          path: newFilePath,
-          mode: "100644",
-          type: "blob",
-          sha: blobSha,
-        },
-      ],
-    });
-
-    const newTreeSha = newTreeData.sha;
-
-    // Create a new commit with the new tree
-    const { data: newCommitData } = await octokit.rest.git.createCommit({
-      owner,
-      repo,
-      message: "Add new file",
-      tree: newTreeSha,
-      parents: [newBranchSha],
-    });
-
-    const newCommitSha = newCommitData.sha;
-
-    // Update the reference to point to the new commit
-    await octokit.rest.git.updateRef({
-      owner,
-      repo,
-      ref: `heads/${branchName}`,
-      sha: newCommitSha,
-    });
-
-    // Create a pull request
-    const response = await octokit.rest.pulls.create({
+    // Step 6: Create a pull request from the forked repository to the original repository
+    const pullRequest = await octokit.rest.pulls.create({
       owner,
       repo,
       title: pullRequestTitle,
       body: pullRequestDescription,
-      head: branchName,
-      base: baseBranch,
-      headers: {
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
+      head: `${forkOwner}:${branchName}`,
+      base: defaultBranch,
     });
 
-    console.log(response.data.html_url);
+    return pullRequest.data;
   } catch (error) {
     console.error("Error creating pull request:", error);
+    throw error;
   }
-};
+}
