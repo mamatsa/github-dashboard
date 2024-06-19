@@ -11,6 +11,7 @@ export default function CreateProposal() {
         <a
           className="text-blue-500 underline hover:text-blue-800"
           href="https://github.com/apps/weights-dashboard-poc"
+          target="_blank"
         >
           github app
         </a>{" "}
