@@ -6,6 +6,17 @@ export default function CreateProposal() {
   return (
     <div>
       <h1 className="text-2xl font-semibold">Create Proposal</h1>
+      <p className="text-gray-400 my-3">
+        * You have to install following{" "}
+        <a
+          className="text-blue-500 underline hover:text-blue-800"
+          href="https://github.com/apps/weights-dashboard-poc"
+        >
+          github app
+        </a>{" "}
+        on your github account to be able to create new proposal
+      </p>
+
       <form action={submitProposal}>
         <div className="flex flex-col gap-4 mt-4">
           <label htmlFor="branch">
