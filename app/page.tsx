@@ -34,26 +34,25 @@ export default async function Home() {
         <Link
           href={`/comments/${pr.number}`}
           key={pr.id}
-          className="border p-5 flex flex-col my-3 gap-1"
+          className="border p-5 flex flex-col my-3 gap-1 hover:bg-slate-100"
         >
           <div className="flex items-center gap-4">
-            <h2 className="font-semibold text-lg">{pr.title}</h2>
-            <p
-              className={`px-3 py-0.5 rounded-xl text-white text-sm ${
-                pr.state === "open" ? "bg-green-400" : "bg-slate-400"
-              }`}
-            >
-              {pr.state}
-            </p>
+            <div className="flex justify-between items-center w-full">
+              <h2 className="font-semibold text-lg">{pr.title}</h2>
+              <p
+                className={`px-3 py-0.5 rounded-xl text-white text-sm ${
+                  pr.state === "open" ? "bg-green-400" : "bg-slate-400"
+                }`}
+              >
+                {pr.state}
+              </p>
+            </div>
           </div>
           <p className="text-xs opacity-50 mt-1">
             #{pr.number} opened {timePassed(pr.created_at)} by {pr.user?.login}
           </p>
         </Link>
       ))}
-
-      {/* Sum of tokens */}
-      <p className="text-lg font-semibold">Total number of tokens: </p>
     </>
   );
 }
