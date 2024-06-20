@@ -5,7 +5,15 @@ import { SubmitButton } from "./components/SubmitButton";
 export default function CreateProposal() {
   return (
     <div>
-      <h1 className="text-2xl font-semibold">Create Proposal</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-semibold">Create Proposal</h1>
+        <Link
+          href="/"
+          className="cursor-pointer border px-3 py-2 hover:bg-slate-200"
+        >
+          Go back
+        </Link>
+      </div>
       <p className="text-gray-400 my-3">
         * You have to install following{" "}
         <a
@@ -79,15 +87,7 @@ export default function CreateProposal() {
           ></textarea>
         </div>
 
-        <div className="flex justify-between items-center mt-1">
-          <SubmitButton />
-          <Link
-            href="/"
-            className="cursor-pointer border px-3 py-2 hover:bg-slate-200"
-          >
-            Go back
-          </Link>{" "}
-        </div>
+        <SubmitButton />
       </form>
     </div>
   );
