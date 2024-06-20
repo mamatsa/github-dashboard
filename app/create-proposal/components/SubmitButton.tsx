@@ -2,14 +2,13 @@
 
 import { useFormStatus } from "react-dom";
 
-export function SubmitButton() {
+export default function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
     <button
-      className={`bg-blue-500 min-w-fit px-3 py-2 text-white ${
-        pending ? "bg-blue-300" : "bg-blue-500"
-      }`}
+      className={`min-w-fit px-3 py-2 border -mt-5 hover:bg-slate-200`}
+      type="submit"
       disabled={pending}
     >
       {!pending ? <span>Create Proposal</span> : <span>Creating ...</span>}

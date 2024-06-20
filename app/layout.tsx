@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { auth, signIn, signOut } from "@/auth";
+import { Button } from "@/app/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +21,7 @@ function SignIn() {
       className="w-full flex justify-between items-center"
     >
       <p>You are not logged in</p>
-      <button type="submit" className="px-3 py-2 border">
-        Sign in with GitHub
-      </button>
+      <Button text="Sign in with GitHub" buttonType="submit" />
     </form>
   );
 }
@@ -37,9 +36,7 @@ function SignOut({ children }: { children: React.ReactNode }) {
       className="w-full flex justify-between items-center"
     >
       <p>{children}</p>
-      <button type="submit" className="px-3 py-2 border">
-        Sign out
-      </button>
+      <Button text="Sign Out" buttonType="submit" />
     </form>
   );
 }

@@ -4,6 +4,7 @@ import {
   fetchPullRequestComments,
   fetchPullRequestFileContent,
 } from "@/app/utils";
+import { Button } from "@/app/components";
 import { AddCommentForm, CommentList, ProposalMarkdown } from "./components";
 
 export default async function Page({ params }: { params: { pull: string } }) {
@@ -33,11 +34,8 @@ export default async function Page({ params }: { params: { pull: string } }) {
         <h1 className="text-2xl font-bold">Pull Request #{params.pull}</h1>
         {/* Go back button */}
         <div>
-          <Link
-            href="/"
-            className="cursor-pointer border px-3 py-2 hover:bg-slate-200"
-          >
-            Go back
+          <Link href="/">
+            <Button text="Go Back" />
           </Link>
         </div>
       </div>

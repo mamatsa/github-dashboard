@@ -1,18 +1,15 @@
 import Link from "next/link";
+import { Button } from "@/app/components";
 import { submitProposal } from "./actions";
-import { SubmitButton } from "./components/SubmitButton";
-import { MarkdownField } from "./components";
+import { MarkdownField, SubmitButton } from "./components";
 
 export default function CreateProposal() {
   return (
     <div>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Create Proposal</h1>
-        <Link
-          href="/"
-          className="cursor-pointer border px-3 py-2 hover:bg-slate-200"
-        >
-          Go back
+        <Link href="/">
+          <Button text="Go Back" />
         </Link>
       </div>
       <p className="text-gray-400 my-3">

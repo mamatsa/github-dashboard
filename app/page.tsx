@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { timePassed, fetchRepositoryPullRequests } from "@/app/utils";
 import { auth } from "@/auth";
+import { Button } from "@/app/components";
 
 export const revalidate = 0;
 
@@ -20,11 +21,8 @@ export default async function Home() {
           Pull requests ({pullRequests.length})
         </h1>
         {session?.accessToken && (
-          <Link
-            href="/create-proposal"
-            className="bg-blue-500 px-3 py-2 text-white"
-          >
-            Add New Proposal
+          <Link href="/create-proposal">
+            <Button text="Add New Proposal" />
           </Link>
         )}
       </div>
@@ -34,7 +32,7 @@ export default async function Home() {
         <Link
           href={`/comments/${pr.number}`}
           key={pr.id}
-          className="border p-5 flex flex-col my-3 gap-1 hover:bg-slate-100"
+          className="border p-5 flex flex-col my-3 gap-1 hover:bg-slate-100 "
         >
           <div className="flex items-center gap-4">
             <div className="flex justify-between items-center w-full">
