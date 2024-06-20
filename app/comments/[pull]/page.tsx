@@ -46,7 +46,12 @@ export default async function Page({ params }: { params: { pull: string } }) {
 
       {/* Display comments */}
       <h2 className="font-bold text-lg">Comments</h2>
-      <CommentList prComments={prComments} />
+
+      {prComments.length ? (
+        <CommentList prComments={prComments} />
+      ) : (
+        <p className="text-gray-400">No comments have been added yet</p>
+      )}
 
       {/* Add comment form */}
       <AddCommentForm issue_number={params.pull} />
