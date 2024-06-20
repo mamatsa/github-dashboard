@@ -1,4 +1,5 @@
 import { addCommentToPullRequest } from "@/app/utils";
+import SubmitButton from "./SubmitButton";
 
 export default function AddCommentForm({
   issue_number,
@@ -14,7 +15,7 @@ export default function AddCommentForm({
           body: formData.get("comment") as string,
         });
       }}
-      className="flex flex-col mt-6 gap-1"
+      className="flex flex-col my-6 gap-1"
     >
       <label htmlFor="comment" className="font-semibold">
         Add comment
@@ -24,8 +25,9 @@ export default function AddCommentForm({
         id="comment"
         className="border p-2"
         placeholder="Comment"
+        required
       ></textarea>
-      <button className="border py-2 px-3 mt-2 w-min">Submit</button>
+      <SubmitButton />
     </form>
   );
 }
