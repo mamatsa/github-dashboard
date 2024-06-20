@@ -1,12 +1,7 @@
 import Link from "next/link";
-import {
-  timePassed,
-  fetchPullRequestDetails,
-  fetchPullRequestComments,
-} from "@/app/utils";
+import { fetchPullRequestDetails, fetchPullRequestComments } from "@/app/utils";
 import AddCommentForm from "./components/AddCommentForm";
-
-export const revalidate = 0;
+import CommentList from "./components/CommentList";
 
 export default async function Page({ params }: { params: { pull: string } }) {
   // Fetch pull request details
@@ -51,20 +46,7 @@ export default async function Page({ params }: { params: { pull: string } }) {
 
       {/* Display comments */}
       <h2 className="font-bold text-lg">Comments</h2>
-      {prComments.map((comment) => (
-        <div key={comment.id} className="border mb-3 mt-2 px-3 py-2">
-          {/* Comment author and time */}
-          <div className="flex items-center gap-2 mb-1">
-            <p className="font-bold text-sm">{comment.user?.login}</p>
-            <p className="text-xs opacity-50">
-              commented {timePassed(comment.created_at)}
-            </p>
-          </div>
-
-          {/* Comment body */}
-          <p>{comment.body}</p>
-        </div>
-      ))}
+      <CommentList prComments={prComments} />
 
       {/* Add comment form */}
       <AddCommentForm issue_number={params.pull} />

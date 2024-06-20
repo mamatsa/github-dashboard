@@ -1,5 +1,6 @@
 import { addCommentToPullRequest } from "@/app/utils";
 import SubmitButton from "./SubmitButton";
+import MarkdownField from "./MarkdownField";
 
 export default function AddCommentForm({
   issue_number,
@@ -10,23 +11,44 @@ export default function AddCommentForm({
     <form
       action={async (formData) => {
         "use server";
+
+        // Build the comment body
+        const body = `- Requested weights: ${formData.get(
+          "weights"
+        )}\n- Number of days: ${formData.get("days")}\n\n\n${formData.get(
+          "description"
+        )}`;
+
         await addCommentToPullRequest({
           issue_number: +issue_number,
-          body: formData.get("comment") as string,
+          body,
         });
       }}
-      className="flex flex-col my-6 gap-1"
+      className="flex flex-col my-7 gap-1"
     >
-      <label htmlFor="comment" className="font-semibold">
+      <label htmlFor="comment" className="font-semibold text-lg mb-1">
         Add comment
       </label>
-      <textarea
-        name="comment"
-        id="comment"
-        className="border p-2"
-        placeholder="Comment"
-        required
-      ></textarea>
+      <div className="w-full flex gap-2 mb-1">
+        <input
+          type="number"
+          name="weights"
+          id="weights"
+          className="border py-2 px-3 rounded placeholder:text-neutral-500"
+          placeholder="Requested weights"
+          required
+        />
+
+        <input
+          type="number"
+          name="days"
+          id="days"
+          className="border py-2 px-3 rounded placeholder:text-neutral-500"
+          placeholder="Number of days"
+          required
+        />
+      </div>
+      <MarkdownField />
       <SubmitButton />
     </form>
   );
