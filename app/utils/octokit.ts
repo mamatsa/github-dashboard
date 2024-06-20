@@ -20,6 +20,12 @@ export const fetchRepositoryPullRequests = async (
       repo,
       state: state,
     });
+
+    // Throw an error if the response is not successful
+    if (response.status !== 200) {
+      throw new Error("Failed to fetch pull request details");
+    }
+
     return response.data;
   } catch (error) {
     console.error("Error fetching repository pull requests:", error);
@@ -48,6 +54,12 @@ export const fetchPullRequestDetails = async (
         pull_number,
       }
     );
+
+    // Throw an error if the response is not successful
+    if (response.status !== 200) {
+      throw new Error("Failed to fetch pull request details");
+    }
+
     return response.data;
   } catch (error) {
     console.error("Error fetching pull request details:", error);
@@ -76,6 +88,12 @@ export const fetchPullRequestComments = async (
         issue_number,
       }
     );
+
+    // Throw an error if the response is not successful
+    if (response.status !== 200) {
+      throw new Error("Failed to fetch pull request details");
+    }
+
     return response.data;
   } catch (error) {
     console.error("Error fetching pull request comments:", error);
