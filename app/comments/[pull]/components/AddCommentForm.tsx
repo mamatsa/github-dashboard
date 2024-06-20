@@ -24,7 +24,7 @@ export default function AddCommentForm({
           body,
         });
       }}
-      className="flex flex-col my-7 gap-1"
+      className="flex flex-col gap-1"
     >
       <label htmlFor="comment" className="font-semibold text-lg mb-1">
         Add comment

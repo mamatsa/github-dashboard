@@ -1,7 +1,12 @@
 import Link from "next/link";
-import { fetchPullRequestDetails, fetchPullRequestComments } from "@/app/utils";
+import {
+  fetchPullRequestDetails,
+  fetchPullRequestComments,
+  fetchPullRequestFileContent,
+} from "@/app/utils";
 import AddCommentForm from "./components/AddCommentForm";
 import CommentList from "./components/CommentList";
+import ProposalMarkdown from "./components/ProposalMarkdown";
 
 export default async function Page({ params }: { params: { pull: string } }) {
   // Fetch pull request details
@@ -18,10 +23,16 @@ export default async function Page({ params }: { params: { pull: string } }) {
     +params.pull
   );
 
+  const prFileContent = await fetchPullRequestFileContent(
+    "mamatsa",
+    "sample-proposals",
+    +params.pull
+  );
+
   return (
-    <>
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold mb-3">Pull Request #{params.pull}</h1>
+        <h1 className="text-2xl font-bold">Pull Request #{params.pull}</h1>
         {/* Go back button */}
         <div>
           <Link
@@ -34,27 +45,34 @@ export default async function Page({ params }: { params: { pull: string } }) {
       </div>
 
       {/* Display PR title and body */}
-      <div className="mb-5 text-lg">
+      <div className="text-lg">
         <p>
           <span className="font-semibold ">Title: </span>
           {prDetails.title}
         </p>
-        <p>
-          <span className="font-semibold">Description:</span> {prDetails.body}
-        </p>
+        {prDetails.body && (
+          <p>
+            <span className="font-semibold">Description:</span> {prDetails.body}
+          </p>
+        )}
       </div>
 
-      {/* Display comments */}
-      <h2 className="font-bold text-lg">Comments</h2>
+      {/* Display proposal markdown */}
+      <ProposalMarkdown content={prFileContent} />
 
-      {prComments.length ? (
-        <CommentList prComments={prComments} />
-      ) : (
-        <p className="text-gray-400">No comments have been added yet</p>
-      )}
+      {/* Display comments */}
+      <div>
+        <h2 className="font-bold text-lg">Comments</h2>
+
+        {prComments.length ? (
+          <CommentList prComments={prComments} />
+        ) : (
+          <p className="text-gray-400">No comments have been added yet</p>
+        )}
+      </div>
 
       {/* Add comment form */}
       <AddCommentForm issue_number={params.pull} />
-    </>
+    </div>
   );
 }

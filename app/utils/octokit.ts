@@ -228,3 +228,78 @@ export async function addCommentToPullRequest({
     throw error;
   }
 }
+
+export async function fetchPullRequestFileContent(
+  owner: string,
+  repo: string,
+  pull_number: number
+): Promise<string> {
+  let session = await auth();
+
+  const octokit = new Octokit({
+    auth: session?.accessToken,
+  });
+
+  try {
+    // Step 1: List the files in the pull request
+    const filesResponse = await octokit.rest.pulls.listFiles({
+      owner,
+      repo,
+      pull_number,
+    });
+
+    const files = filesResponse.data;
+
+    // Assuming there's only one file in the pull request
+    if (files.length === 1) {
+      const file = files[0];
+      const filePath = file.filename;
+
+      // Step 2: Get the list of commits in the pull request
+      const commitsResponse = await octokit.rest.pulls.listCommits({
+        owner,
+        repo,
+        pull_number,
+      });
+
+      // Get the SHA of the latest commit
+      const latestCommit =
+        commitsResponse.data[commitsResponse.data.length - 1];
+      const ref = latestCommit.sha; // Use the latest commit SHA
+
+      // Step 3: Fetch the file content from the latest commit
+      const contentResponse = await octokit.rest.repos.getContent({
+        owner,
+        repo,
+        path: filePath,
+        ref, // Commit SHA
+      });
+
+      if (Array.isArray(contentResponse.data)) {
+        throw new Error(
+          "Expected a file but found a directory or multiple items."
+        );
+      }
+
+      const contentData = contentResponse.data;
+
+      // Ensure that the content is present and is a file
+      if ("content" in contentData && contentData.type === "file") {
+        // The content is Base64 encoded, so decode it
+        const content = Buffer.from(contentData.content, "base64").toString(
+          "utf8"
+        );
+        return content;
+      } else {
+        throw new Error("Content is not a file.");
+      }
+    } else {
+      throw new Error(
+        "Expected one file in the pull request, but found multiple or none."
+      );
+    }
+  } catch (error) {
+    console.error("Error fetching pull request file content:", error);
+    throw error;
+  }
+}
