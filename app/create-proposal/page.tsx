@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { submitProposal } from "./actions";
 import { SubmitButton } from "./components/SubmitButton";
-import MarkdownField from "./components/MarkdownField";
+import { MarkdownField } from "./components";
 
 export default function CreateProposal() {
   return (
