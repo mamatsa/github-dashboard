@@ -7,7 +7,7 @@ export function SubmitButton() {
 
   return (
     <button
-      className={`bg-blue-500 min-w-fit px-3 py-2 text-white mt-4 ${
+      className={`bg-blue-500 min-w-fit px-3 py-2 text-white ${
         pending ? "bg-blue-300" : "bg-blue-500"
       }`}
       disabled={pending}

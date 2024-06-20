@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { submitProposal } from "./actions";
 import { SubmitButton } from "./components/SubmitButton";
+import MarkdownField from "./components/MarkdownField";
 
 export default function CreateProposal() {
   return (
@@ -70,22 +71,7 @@ export default function CreateProposal() {
             placeholder="Description"
           ></textarea>
         </div>
-
-        <div className="flex flex-col gap-4 mt-4">
-          <label htmlFor="content">
-            Content{" "}
-            <span className="text-sm text-gray-400">
-              (Content for markdown file)
-            </span>
-          </label>
-          <textarea
-            name="content"
-            id="content"
-            className="border p-2"
-            placeholder="Content"
-            rows={10}
-          ></textarea>
-        </div>
+        <MarkdownField />
 
         <SubmitButton />
       </form>
