@@ -13,12 +13,6 @@ export default async function Home() {
     "all"
   );
 
-  // Count how many tokens are in the response body
-  const extraxtTokens = (body: string) => {
-    const tokensMatch = body.match(/- Number of tokens\s*:?\s*(\d+)/);
-    return tokensMatch ? parseInt(tokensMatch[1], 10) : 0;
-  };
-
   return (
     <>
       <div className="flex items-center justify-between mb-5">
@@ -52,7 +46,6 @@ export default async function Home() {
               {pr.state}
             </p>
           </div>
-          <p>Number of tokens: {extraxtTokens(pr.body || "")}</p>
           <p className="text-xs opacity-50 mt-1">
             #{pr.number} opened {timePassed(pr.created_at)} by {pr.user?.login}
           </p>
@@ -60,13 +53,7 @@ export default async function Home() {
       ))}
 
       {/* Sum of tokens */}
-      <p className="text-lg font-semibold">
-        Total number of tokens:{" "}
-        {pullRequests.reduce(
-          (acc, pr) => acc + extraxtTokens(pr.body || ""),
-          0
-        )}
-      </p>
+      <p className="text-lg font-semibold">Total number of tokens: </p>
     </>
   );
 }
