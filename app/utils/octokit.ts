@@ -1,5 +1,6 @@
 import { Octokit } from "octokit";
 import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 // Fetch repository pull requests
 export const fetchRepositoryPullRequests = async (
@@ -190,6 +191,40 @@ export async function createPullRequest({
     return pullRequest.data;
   } catch (error) {
     console.error("Error creating pull request:", error);
+    throw error;
+  }
+}
+
+// Add a comment to a pull request
+export async function addCommentToPullRequest({
+  issue_number,
+  body,
+}: {
+  issue_number: number;
+  body: string;
+}) {
+  let session = await auth();
+
+  const octokit = new Octokit({
+    auth: session?.accessToken,
+  });
+
+  const owner = "mamatsa";
+  const repo = "sample-proposals";
+
+  try {
+    const response = await octokit.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number,
+      body,
+    });
+
+    revalidatePath(`/comments/${issue_number}`);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error adding comment to pull request:", error);
     throw error;
   }
 }
