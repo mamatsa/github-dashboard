@@ -21,8 +21,8 @@ export default async function Home() {
 
   return (
     <>
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold mb-5">
+      <div className="flex items-center justify-between mb-5">
+        <h1 className="text-2xl font-bold">
           Pull requests ({pullRequests.length})
         </h1>
         {session?.accessToken && (
