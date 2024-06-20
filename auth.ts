@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
+import GitHubProvider from "next-auth/providers/github";
 
 export const {
   handlers: { GET, POST },
@@ -7,7 +7,19 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
-  providers: [GitHub],
+  providers: [
+    GitHubProvider({
+      clientId: process.env.AUTH_GITHUB_ID,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
+  ],
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
