@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/app/components";
 import { submitProposal } from "./actions";
 import { MarkdownField, SubmitButton } from "./components";
+import { redirect } from "next/navigation";
 
 export default function CreateProposal() {
   return (
@@ -24,7 +25,13 @@ export default function CreateProposal() {
         on your github account to be able to create new MRC
       </p>
 
-      <form action={submitProposal}>
+      <form
+        action={async (formData) => {
+          "use server";
+          await submitProposal(formData);
+          redirect(`/`);
+        }}
+      >
         <div className="flex flex-col gap-4 mt-5">
           <label htmlFor="title">Title</label>
           <input
