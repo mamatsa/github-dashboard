@@ -4,8 +4,6 @@ import { revalidatePath } from "next/cache";
 
 // Fetch repository pull requests
 export const fetchRepositoryPullRequests = async (
-  owner: string,
-  repo: string,
   state: "open" | "closed" | "all" = "all"
 ) => {
   try {
@@ -16,8 +14,8 @@ export const fetchRepositoryPullRequests = async (
     });
 
     const response = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
-      owner,
-      repo,
+      owner: process.env.TARGET_REPO_OWNER!,
+      repo: process.env.TARGET_REPO_NAME!,
       state: state,
     });
 
@@ -28,11 +26,7 @@ export const fetchRepositoryPullRequests = async (
 };
 
 // Fetch specific pull request details
-export const fetchPullRequestDetails = async (
-  owner: string,
-  repo: string,
-  pull_number: number
-) => {
+export const fetchPullRequestDetails = async (pull_number: number) => {
   try {
     let session = await auth();
 
@@ -43,8 +37,8 @@ export const fetchPullRequestDetails = async (
     const response = await octokit.request(
       "GET /repos/{owner}/{repo}/pulls/{pull_number}",
       {
-        owner,
-        repo,
+        owner: process.env.TARGET_REPO_OWNER!,
+        repo: process.env.TARGET_REPO_NAME!,
         pull_number,
       }
     );
@@ -56,11 +50,7 @@ export const fetchPullRequestDetails = async (
 };
 
 // Fetch specific pull request comments
-export const fetchPullRequestComments = async (
-  owner: string,
-  repo: string,
-  issue_number: number
-) => {
+export const fetchPullRequestComments = async (issue_number: number) => {
   try {
     let session = await auth();
 
@@ -71,8 +61,8 @@ export const fetchPullRequestComments = async (
     const response = await octokit.request(
       "GET /repos/{owner}/{repo}/issues/{issue_number}/comments",
       {
-        owner,
-        repo,
+        owner: process.env.TARGET_REPO_OWNER!,
+        repo: process.env.TARGET_REPO_NAME!,
         issue_number,
       }
     );
@@ -101,8 +91,6 @@ export async function createPullRequest({
     auth: session?.accessToken,
   });
 
-  const owner = "mamatsa";
-  const repo = "sample-proposals";
   const newFilePath = "proposal.md";
 
   try {
@@ -113,7 +101,7 @@ export async function createPullRequest({
     try {
       const forkResponse = await octokit.rest.repos.get({
         owner: "authenticated_user", // Change to the authenticated user's GitHub username
-        repo,
+        repo: process.env.TARGET_REPO_NAME!,
       });
 
       forkOwner = forkResponse.data.owner.login;
@@ -127,8 +115,8 @@ export async function createPullRequest({
       ) {
         // Repository is not forked yet, so we fork it
         const forkResponse = await octokit.rest.repos.createFork({
-          owner,
-          repo,
+          owner: process.env.TARGET_REPO_OWNER!,
+          repo: process.env.TARGET_REPO_NAME!,
         });
 
         forkOwner = forkResponse.data.owner.login;
@@ -180,8 +168,8 @@ export async function createPullRequest({
 
     // Step 6: Create a pull request from the forked repository to the original repository
     const pullRequest = await octokit.rest.pulls.create({
-      owner,
-      repo,
+      owner: process.env.TARGET_REPO_OWNER!,
+      repo: process.env.TARGET_REPO_NAME!,
       title: pullRequestTitle,
       body: pullRequestDescription,
       head: `${forkOwner}:${branchName}`,
@@ -208,13 +196,10 @@ export async function addCommentToPullRequest({
     auth: session?.accessToken,
   });
 
-  const owner = "mamatsa";
-  const repo = "sample-proposals";
-
   try {
     const response = await octokit.rest.issues.createComment({
-      owner,
-      repo,
+      owner: process.env.TARGET_REPO_OWNER!,
+      repo: process.env.TARGET_REPO_NAME!,
       issue_number,
       body,
     });
@@ -227,11 +212,7 @@ export async function addCommentToPullRequest({
   }
 }
 
-export async function fetchPullRequestFileContent(
-  owner: string,
-  repo: string,
-  pull_number: number
-) {
+export async function fetchPullRequestFileContent(pull_number: number) {
   let session = await auth();
 
   const octokit = new Octokit({
@@ -241,8 +222,8 @@ export async function fetchPullRequestFileContent(
   try {
     // Step 1: List the files in the pull request
     const filesResponse = await octokit.rest.pulls.listFiles({
-      owner,
-      repo,
+      owner: process.env.TARGET_REPO_OWNER!,
+      repo: process.env.TARGET_REPO_NAME!,
       pull_number,
     });
 
@@ -255,8 +236,8 @@ export async function fetchPullRequestFileContent(
 
       // Step 2: Get the list of commits in the pull request
       const commitsResponse = await octokit.rest.pulls.listCommits({
-        owner,
-        repo,
+        owner: process.env.TARGET_REPO_OWNER!,
+        repo: process.env.TARGET_REPO_NAME!,
         pull_number,
       });
 
@@ -267,8 +248,8 @@ export async function fetchPullRequestFileContent(
 
       // Step 3: Fetch the file content from the latest commit
       const contentResponse = await octokit.rest.repos.getContent({
-        owner,
-        repo,
+        owner: process.env.TARGET_REPO_OWNER!,
+        repo: process.env.TARGET_REPO_NAME!,
         path: filePath,
         ref, // Commit SHA
       });

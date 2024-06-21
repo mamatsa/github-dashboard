@@ -8,11 +8,7 @@ export const revalidate = 0;
 export default async function Home() {
   let session = await auth();
 
-  const pullRequests = await fetchRepositoryPullRequests(
-    "mamatsa",
-    "sample-proposals",
-    "all"
-  );
+  const pullRequests = await fetchRepositoryPullRequests("all");
 
   return (
     <>

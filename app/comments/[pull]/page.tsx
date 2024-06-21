@@ -9,24 +9,12 @@ import { AddCommentForm, CommentList, ProposalMarkdown } from "./components";
 
 export default async function Page({ params }: { params: { pull: string } }) {
   // Fetch pull request details
-  const prDetails = await fetchPullRequestDetails(
-    "mamatsa",
-    "sample-proposals",
-    +params.pull
-  );
+  const prDetails = await fetchPullRequestDetails(+params.pull);
 
   // Fetch pull request comments
-  const prComments = await fetchPullRequestComments(
-    "mamatsa",
-    "sample-proposals",
-    +params.pull
-  );
+  const prComments = await fetchPullRequestComments(+params.pull);
 
-  const prFileContent = await fetchPullRequestFileContent(
-    "mamatsa",
-    "sample-proposals",
-    +params.pull
-  );
+  const prFileContent = await fetchPullRequestFileContent(+params.pull);
 
   return (
     <div className="space-y-6">
