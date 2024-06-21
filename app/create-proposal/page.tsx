@@ -7,7 +7,7 @@ export default function CreateProposal() {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">Create Proposal</h1>
+        <h1 className="text-2xl font-semibold">Create MRC</h1>
         <Link href="/">
           <Button text="Go Back" />
         </Link>
@@ -21,15 +21,12 @@ export default function CreateProposal() {
         >
           github app
         </a>{" "}
-        on your github account to be able to create new proposal
+        on your github account to be able to create new MRC
       </p>
 
       <form action={submitProposal}>
         <div className="flex flex-col gap-4 mt-4">
-          <label htmlFor="title">
-            Title{" "}
-            <span className="text-sm text-gray-400">(Pull request title)</span>
-          </label>
+          <label htmlFor="title">Title</label>
           <input
             type="text"
             id="title"
@@ -40,12 +37,7 @@ export default function CreateProposal() {
           />
         </div>
         <div className="flex flex-col gap-4 mt-4">
-          <label htmlFor="description">
-            Description{" "}
-            <span className="text-sm text-gray-400">
-              (Pull request description)
-            </span>
-          </label>
+          <label htmlFor="description">Description</label>
           <textarea
             name="description"
             id="description"

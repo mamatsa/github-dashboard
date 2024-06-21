@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { pull: string } }) {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Pull Request #{params.pull}</h1>
+        <h1 className="text-2xl font-bold">MRC #{params.pull}</h1>
         {/* Go back button */}
         <div>
           <Link href="/">
@@ -42,7 +42,7 @@ export default async function Page({ params }: { params: { pull: string } }) {
       </div>
 
       {/* Display proposal markdown */}
-      <ProposalMarkdown content={prFileContent} />
+      <ProposalMarkdown content={prFileContent} pullNumber={params.pull} />
 
       {/* Display comments */}
       <div>

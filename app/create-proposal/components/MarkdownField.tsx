@@ -23,7 +23,7 @@ export default function MarkdownField() {
       <label htmlFor="content">
         Content{" "}
         <span className="text-sm text-gray-400">
-          (Content for markdown file)
+          (Details of MRC in markdown format)
         </span>
       </label>
       <SimpleMDE

@@ -14,11 +14,11 @@ export default async function Home() {
     <>
       <div className="flex items-center justify-between mb-5">
         <h1 className="text-2xl font-bold">
-          Pull requests ({pullRequests && pullRequests.length})
+          MRCs ({pullRequests && pullRequests.length})
         </h1>
         {session?.accessToken && (
           <Link href="/create-proposal">
-            <Button text="Add New Proposal" />
+            <Button text="Add New MRC" />
           </Link>
         )}
       </div>

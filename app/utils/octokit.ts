@@ -152,8 +152,8 @@ export async function createPullRequest({
     });
 
     const nextNumber = pullRequests[0].number + 1;
-    const newFilePath = `proposal${nextNumber}.md`;
-    const branchName = `proposal${nextNumber}`;
+    const newFilePath = `MRC-${nextNumber}.md`;
+    const branchName = `MRC-${nextNumber}`;
 
     // Step 5: Create a new branch in the forked repository
     await octokit.rest.git.createRef({
