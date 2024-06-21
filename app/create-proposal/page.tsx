@@ -25,7 +25,7 @@ export default function CreateProposal() {
       </p>
 
       <form action={submitProposal}>
-        <div className="flex flex-col gap-4 mt-4">
+        <div className="flex flex-col gap-4 mt-5">
           <label htmlFor="title">Title</label>
           <input
             type="text"
@@ -36,15 +36,50 @@ export default function CreateProposal() {
             required
           />
         </div>
-        <div className="flex flex-col gap-4 mt-4">
-          <label htmlFor="description">Description</label>
-          <textarea
-            name="description"
-            id="description"
-            className="border border-neutral-800 p-3 bg-black rounded focus:outline-none focus:border-[#179c65]"
-            placeholder="Description"
-          ></textarea>
+
+        {/* Select an option */}
+        <div className="flex flex-col mt-5">
+          <label htmlFor="mri">
+            MRI Number{" "}
+            <p className="text-sm text-gray-400 my-0.5 mb-2">
+              To which MRI does this contribution belong?
+            </p>
+          </label>
+          <select
+            id="mri"
+            name="mri"
+            className="border p-3 rounded bg-black border-neutral-800 placeholder-gray-500 text-white"
+          >
+            <option>Choose MRI</option>
+            <option value="1 - Smart Contracts on Ethereum or Arbitrum">
+              1 - Smart Contracts on Ethereum or Arbitrum
+            </option>
+            <option value="2 - Smart Agent Tools and Examples">
+              2 - Smart Agent Tools and Examples
+            </option>
+            <option value="3 - Morpheus Local Install Desktop / Mobile">
+              3 - Morpheus Local Install Desktop / Mobile
+            </option>
+            <option value="4 - TCM / MOR20 Token Standard for Fair Launches">
+              4 - TCM / MOR20 Token Standard for Fair Launches
+            </option>
+            <option value="5 - Protection Fund">5 - Protection Fund</option>
+            <option value="6 - Capital Proofs Extended beyond Lido stETH">
+              6 - Capital Proofs Extended beyond Lido stETH
+            </option>
+            <option value="7 - Compute Proofs Morpheus / Lumerin">
+              7 - Compute Proofs Morpheus / Lumerin
+            </option>
+            <option value="8 - Code Proofs & Dashboards">
+              8 - Code Proofs & Dashboards
+            </option>
+            <option value="9 - Frontend Proofs & Examples">
+              9 - Frontend Proofs & Examples
+            </option>
+            <option value="10 - Interoperability">10 - Interoperability</option>
+          </select>
         </div>
+
         <MarkdownField />
 
         <SubmitButton />

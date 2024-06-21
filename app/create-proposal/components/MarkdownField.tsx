@@ -19,12 +19,12 @@ export default function MarkdownField() {
   };
 
   return (
-    <div className="flex flex-col gap-4 mt-4">
+    <div className="flex flex-col gap-4 mt-5">
       <label htmlFor="content">
         Content{" "}
-        <span className="text-sm text-gray-400">
-          (Details of MRC in markdown format)
-        </span>
+        <p className="text-sm text-gray-400">
+          Details of MRC in markdown format
+        </p>
       </label>
       <SimpleMDE
         onChange={handleEditorChange}

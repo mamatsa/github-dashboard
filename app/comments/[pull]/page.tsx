@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { pull: string } }) {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">MRC #{params.pull}</h1>
+        <h1 className="text-2xl font-bold -mb-2">MRC #{params.pull}</h1>
         {/* Go back button */}
         <div>
           <Link href="/">
@@ -30,14 +30,15 @@ export default async function Page({ params }: { params: { pull: string } }) {
 
       {/* Display PR title and body */}
       <div className="text-lg">
-        <p>
-          <span className="font-semibold ">Title: </span>
-          {prDetails && prDetails.title}
-        </p>
+        <>
+          <p className="font-semibold">Title</p>
+          <p>{prDetails && prDetails.title}</p>
+        </>
         {prDetails?.body && (
-          <p>
-            <span className="font-semibold">Description:</span> {prDetails.body}
-          </p>
+          <>
+            <p className="font-semibold mt-3">MRI Number</p>
+            <p>{prDetails.body}</p>
+          </>
         )}
       </div>
 
