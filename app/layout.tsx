@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { auth, signIn, signOut } from "@/auth";
 import { Button } from "@/app/components";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -57,12 +58,22 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <header className="w-full p-4 max-w-screen-2xl mx-auto sm:px-10 sm:py-6 text-white">
-          <div>
-            {user && !sessionIsExpired ? (
-              <SignOut>{`Welcome, ${user}`}</SignOut>
-            ) : (
-              <SignIn />
-            )}
+          <div className="flex gap-4 items-center">
+            <Image
+              src="/mor.svg" // Path to the image in the public folder
+              alt="mor"
+              width={100}
+              height={100}
+              className="h-10 w-auto"
+              priority={true}
+            />
+            <div className="w-full">
+              {user && !sessionIsExpired ? (
+                <SignOut>{`Welcome, ${user}`}</SignOut>
+              ) : (
+                <SignIn />
+              )}
+            </div>
           </div>
           <div className="w-full h-px bg-neutral-600 mt-5"></div>
         </header>
