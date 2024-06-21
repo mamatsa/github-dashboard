@@ -14,8 +14,13 @@ export default function PlainComment({
       <label htmlFor="comment" className="font-semibold text-lg mb-1">
         Add Plain Comment
       </label>
-      <MarkdownField />
-      <SubmitButton />
+      <MarkdownField
+        id="description"
+        label=""
+        description=""
+        placeholder="Comment"
+      />
+      <SubmitButton text="Submit Comment" />
     </form>
   );
 }
