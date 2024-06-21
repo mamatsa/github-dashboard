@@ -29,7 +29,7 @@ export default async function Home() {
           <Link
             href={`/comments/${pr.number}`}
             key={pr.id}
-            className="border p-5 flex flex-col my-3 gap-1 hover:bg-slate-100 "
+            className="border border-neutral-600 p-5 flex flex-col my-3 gap-1 hover:bg-neutral-800 "
           >
             <div className="flex items-center gap-4">
               <div className="flex justify-between items-center w-full">

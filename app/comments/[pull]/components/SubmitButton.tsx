@@ -7,7 +7,7 @@ export default function SubmitButton({}) {
 
   return (
     <button
-      className="border py-2 px-3 w-min whitespace-nowrap -mt-5 hover:bg-slate-200"
+      className="py-2 px-5 w-min whitespace-nowrap -mt-5 bg-[#179c65] rounded font-semibold hover:bg-[#127d51]"
       type="submit"
       disabled={pending}
     >

@@ -34,7 +34,7 @@ export default function AddCommentForm({
           type="number"
           name="weights"
           id="weights"
-          className="border py-2 px-3 rounded placeholder:text-neutral-500"
+          className="border border-neutral-800 p-3 bg-black rounded focus:outline-none focus:border-[#179c65]"
           placeholder="Requested weights"
           required
         />
@@ -43,7 +43,7 @@ export default function AddCommentForm({
           type="number"
           name="days"
           id="days"
-          className="border py-2 px-3 rounded placeholder:text-neutral-500"
+          className="border border-neutral-800 p-3 bg-black rounded focus:outline-none focus:border-[#179c65]"
           placeholder="Number of days"
           required
         />

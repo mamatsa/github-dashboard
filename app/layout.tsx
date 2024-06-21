@@ -56,7 +56,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="w-full p-4 max-w-screen-2xl mx-auto sm:px-10 sm:py-6">
+        <header className="w-full p-4 max-w-screen-2xl mx-auto sm:px-10 sm:py-6 text-white">
           <div>
             {user && !sessionIsExpired ? (
               <SignOut>{`Welcome, ${user}`}</SignOut>
@@ -64,11 +64,11 @@ export default async function RootLayout({
               <SignIn />
             )}
           </div>
-          <div className="w-full h-px bg-slate-300 mt-5"></div>
+          <div className="w-full h-px bg-neutral-600 mt-5"></div>
         </header>
 
         {user && !sessionIsExpired && (
-          <main className="p-4 max-w-screen-2xl mx-auto sm:px-10">
+          <main className="p-4 max-w-screen-2xl mx-auto sm:px-10 text-white">
             {children}
           </main>
         )}

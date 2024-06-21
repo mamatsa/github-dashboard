@@ -7,7 +7,7 @@ export default function SubmitButton() {
 
   return (
     <button
-      className={`min-w-fit px-3 py-2 border -mt-5 hover:bg-slate-200`}
+      className="min-w-fit px-5 py-2 -mt-5 bg-[#179c65] rounded font-semibold hover:bg-[#127d51]"
       type="submit"
       disabled={pending}
     >

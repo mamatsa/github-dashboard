@@ -5,3 +5,7 @@
 .remove-all * {
   all: revert;
 }
+
+body {
+  background-color: black;
+}

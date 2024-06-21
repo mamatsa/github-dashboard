@@ -34,7 +34,7 @@ export default function CreateProposal() {
             type="text"
             id="title"
             name="title"
-            className="border p-2"
+            className="border border-neutral-800 p-3 bg-black rounded focus:outline-none focus:border-[#179c65]"
             placeholder="Title"
             required
           />
@@ -49,7 +49,7 @@ export default function CreateProposal() {
           <textarea
             name="description"
             id="description"
-            className="border p-2"
+            className="border border-neutral-800 p-3 bg-black rounded focus:outline-none focus:border-[#179c65]"
             placeholder="Description"
           ></textarea>
         </div>
