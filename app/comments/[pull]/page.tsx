@@ -5,7 +5,7 @@ import {
   fetchPullRequestFileContent,
 } from "@/app/utils";
 import { Button } from "@/app/components";
-import { AddCommentForm, CommentList, ProposalMarkdown } from "./components";
+import { AddComment, CommentList, ProposalMarkdown } from "./components";
 
 export default async function Page({ params }: { params: { pull: string } }) {
   // Fetch pull request details
@@ -56,7 +56,7 @@ export default async function Page({ params }: { params: { pull: string } }) {
       </div>
 
       {/* Add comment form */}
-      <AddCommentForm issue_number={params.pull} />
+      <AddComment issue_number={params.pull} />
     </div>
   );
 }

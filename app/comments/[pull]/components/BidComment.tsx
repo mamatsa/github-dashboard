@@ -1,33 +1,14 @@
-import { addCommentToPullRequest } from "@/app/utils";
-import SubmitButton from "./SubmitButton";
-import MarkdownField from "./MarkdownField";
+import { MarkdownField, SubmitButton } from "./";
+import { addBidComment } from "../actions";
 
-export default function AddCommentForm({
-  issue_number,
-}: {
-  issue_number: string;
-}) {
+export default function BidComment({ issue_number }: { issue_number: string }) {
   return (
     <form
-      action={async (formData) => {
-        "use server";
-
-        // Build the comment body
-        const body = `- Requested weights: ${formData.get(
-          "weights"
-        )}\n- Number of days: ${formData.get("days")}\n\n\n${formData.get(
-          "description"
-        )}`;
-
-        await addCommentToPullRequest({
-          issue_number: +issue_number,
-          body,
-        });
-      }}
+      action={(formData) => addBidComment(formData, issue_number)}
       className="flex flex-col gap-1"
     >
       <label htmlFor="comment" className="font-semibold text-lg mb-1">
-        Add comment
+        Create a Bid
       </label>
       <div className="w-full flex gap-2 mb-1">
         <input
