@@ -26,22 +26,6 @@ export default function CreateProposal() {
 
       <form action={submitProposal}>
         <div className="flex flex-col gap-4 mt-4">
-          <label htmlFor="branch">
-            Branch Name{" "}
-            <span className="text-sm text-gray-400">
-              (Name of the new branch)
-            </span>
-          </label>
-          <input
-            type="text"
-            id="branch"
-            name="branch"
-            className="border p-2"
-            placeholder="Branch Name"
-          />
-        </div>
-
-        <div className="flex flex-col gap-4 mt-4">
           <label htmlFor="title">
             Title{" "}
             <span className="text-sm text-gray-400">(Pull request title)</span>
@@ -52,6 +36,7 @@ export default function CreateProposal() {
             name="title"
             className="border p-2"
             placeholder="Title"
+            required
           />
         </div>
         <div className="flex flex-col gap-4 mt-4">

@@ -73,14 +73,12 @@ export const fetchPullRequestComments = async (issue_number: number) => {
   }
 };
 
-// Create a new pull request
+// Create a pull request
 export async function createPullRequest({
-  branchName,
   newFileContent,
   pullRequestTitle,
   pullRequestDescription,
 }: {
-  branchName: string;
   newFileContent: string;
   pullRequestTitle: string;
   pullRequestDescription: string;
@@ -90,8 +88,6 @@ export async function createPullRequest({
   const octokit = new Octokit({
     auth: session?.accessToken,
   });
-
-  const newFilePath = "proposal.md";
 
   try {
     // Step 1: Check if the repository is already forked
@@ -148,7 +144,18 @@ export async function createPullRequest({
       ref: `heads/${defaultBranch}`,
     });
 
-    // Step 4: Create a new branch in the forked repository
+    // Step 4: Fetch the current pull requests to determine the next unique number
+    const { data: pullRequests } = await octokit.rest.pulls.list({
+      owner: process.env.TARGET_REPO_OWNER!,
+      repo: process.env.TARGET_REPO_NAME!,
+      state: "all",
+    });
+
+    const nextNumber = pullRequests[0].number + 1;
+    const newFilePath = `proposal${nextNumber}.md`;
+    const branchName = `proposal${nextNumber}`;
+
+    // Step 5: Create a new branch in the forked repository
     await octokit.rest.git.createRef({
       owner: forkOwner,
       repo: forkRepo,
@@ -156,7 +163,7 @@ export async function createPullRequest({
       sha: baseSha,
     });
 
-    // Step 5: Create or update a file in the new branch
+    // Step 6: Create or update a file in the new branch
     await octokit.rest.repos.createOrUpdateFileContents({
       owner: forkOwner,
       repo: forkRepo,
@@ -166,7 +173,7 @@ export async function createPullRequest({
       branch: branchName,
     });
 
-    // Step 6: Create a pull request from the forked repository to the original repository
+    // Step 7: Create a pull request from the forked repository to the original repository
     const pullRequest = await octokit.rest.pulls.create({
       owner: process.env.TARGET_REPO_OWNER!,
       repo: process.env.TARGET_REPO_NAME!,
