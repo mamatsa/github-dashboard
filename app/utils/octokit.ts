@@ -21,15 +21,9 @@ export const fetchRepositoryPullRequests = async (
       state: state,
     });
 
-    // Throw an error if the response is not successful
-    if (response.status !== 200) {
-      throw new Error("Failed to fetch pull request details");
-    }
-
     return response.data;
   } catch (error) {
     console.error("Error fetching repository pull requests:", error);
-    throw error;
   }
 };
 
@@ -55,15 +49,9 @@ export const fetchPullRequestDetails = async (
       }
     );
 
-    // Throw an error if the response is not successful
-    if (response.status !== 200) {
-      throw new Error("Failed to fetch pull request details");
-    }
-
     return response.data;
   } catch (error) {
     console.error("Error fetching pull request details:", error);
-    throw error;
   }
 };
 
@@ -89,15 +77,9 @@ export const fetchPullRequestComments = async (
       }
     );
 
-    // Throw an error if the response is not successful
-    if (response.status !== 200) {
-      throw new Error("Failed to fetch pull request details");
-    }
-
     return response.data;
   } catch (error) {
     console.error("Error fetching pull request comments:", error);
-    throw error;
   }
 };
 
@@ -209,7 +191,6 @@ export async function createPullRequest({
     return pullRequest.data;
   } catch (error) {
     console.error("Error creating pull request:", error);
-    throw error;
   }
 }
 
@@ -243,7 +224,6 @@ export async function addCommentToPullRequest({
     return response.data;
   } catch (error) {
     console.error("Error adding comment to pull request:", error);
-    throw error;
   }
 }
 
@@ -251,7 +231,7 @@ export async function fetchPullRequestFileContent(
   owner: string,
   repo: string,
   pull_number: number
-): Promise<string> {
+) {
   let session = await auth();
 
   const octokit = new Octokit({
@@ -318,6 +298,5 @@ export async function fetchPullRequestFileContent(
     }
   } catch (error) {
     console.error("Error fetching pull request file content:", error);
-    throw error;
   }
 }

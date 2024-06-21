@@ -18,7 +18,7 @@ export default async function Home() {
     <>
       <div className="flex items-center justify-between mb-5">
         <h1 className="text-2xl font-bold">
-          Pull requests ({pullRequests.length})
+          Pull requests ({pullRequests && pullRequests.length})
         </h1>
         {session?.accessToken && (
           <Link href="/create-proposal">
@@ -28,29 +28,31 @@ export default async function Home() {
       </div>
 
       {/* List of pull requests */}
-      {pullRequests.map((pr) => (
-        <Link
-          href={`/comments/${pr.number}`}
-          key={pr.id}
-          className="border p-5 flex flex-col my-3 gap-1 hover:bg-slate-100 "
-        >
-          <div className="flex items-center gap-4">
-            <div className="flex justify-between items-center w-full">
-              <h2 className="font-semibold text-lg">{pr.title}</h2>
-              <p
-                className={`px-3 py-0.5 rounded-xl text-white text-sm ${
-                  pr.state === "open" ? "bg-green-400" : "bg-slate-400"
-                }`}
-              >
-                {pr.state}
-              </p>
+      {pullRequests &&
+        pullRequests.map((pr) => (
+          <Link
+            href={`/comments/${pr.number}`}
+            key={pr.id}
+            className="border p-5 flex flex-col my-3 gap-1 hover:bg-slate-100 "
+          >
+            <div className="flex items-center gap-4">
+              <div className="flex justify-between items-center w-full">
+                <h2 className="font-semibold text-lg">{pr.title}</h2>
+                <p
+                  className={`px-3 py-0.5 rounded-xl text-white text-sm ${
+                    pr.state === "open" ? "bg-green-400" : "bg-slate-400"
+                  }`}
+                >
+                  {pr.state}
+                </p>
+              </div>
             </div>
-          </div>
-          <p className="text-xs opacity-50 mt-1">
-            #{pr.number} opened {timePassed(pr.created_at)} by {pr.user?.login}
-          </p>
-        </Link>
-      ))}
+            <p className="text-xs opacity-50 mt-1">
+              #{pr.number} opened {timePassed(pr.created_at)} by{" "}
+              {pr.user?.login}
+            </p>
+          </Link>
+        ))}
     </>
   );
 }

@@ -44,9 +44,9 @@ export default async function Page({ params }: { params: { pull: string } }) {
       <div className="text-lg">
         <p>
           <span className="font-semibold ">Title: </span>
-          {prDetails.title}
+          {prDetails && prDetails.title}
         </p>
-        {prDetails.body && (
+        {prDetails?.body && (
           <p>
             <span className="font-semibold">Description:</span> {prDetails.body}
           </p>
@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: { pull: string } }) {
       <div>
         <h2 className="font-bold text-lg">Comments</h2>
 
-        {prComments.length ? (
+        {prComments?.length ? (
           <CommentList prComments={prComments} />
         ) : (
           <p className="text-gray-400">No comments have been added yet</p>
