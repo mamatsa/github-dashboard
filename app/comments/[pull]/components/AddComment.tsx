@@ -19,8 +19,18 @@ export default function AddCommentForm({
         />
         <Button text="Add Bid" onClick={() => setCommentType("bid")} />
       </div>
-      {commentType === "plain" && <PlainComment issue_number={issue_number} />}
-      {commentType === "bid" && <BidComment issue_number={issue_number} />}
+      {commentType === "plain" && (
+        <PlainComment
+          pullNumber={issue_number}
+          onSubmit={() => setCommentType(null)}
+        />
+      )}
+      {commentType === "bid" && (
+        <BidComment
+          pullNumber={issue_number}
+          onSubmit={() => setCommentType(null)}
+        />
+      )}
     </>
   );
 }

@@ -1,10 +1,19 @@
 import { MarkdownField, SubmitButton, Checkbox } from "./";
 import { addBidComment } from "../actions";
 
-export default function BidComment({ issue_number }: { issue_number: string }) {
+export default function BidComment({
+  pullNumber,
+  onSubmit,
+}: {
+  pullNumber: string;
+  onSubmit: () => void;
+}) {
   return (
     <form
-      action={(formData) => addBidComment(formData, issue_number)}
+      action={(formData) => {
+        addBidComment(formData, pullNumber);
+        onSubmit();
+      }}
       className="flex flex-col gap-3"
     >
       <label htmlFor="comment" className="font-semibold text-2xl mb-1">

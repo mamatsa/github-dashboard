@@ -2,13 +2,18 @@ import { SubmitButton, MarkdownField } from "./";
 import { addPlainComment } from "../actions";
 
 export default function PlainComment({
-  issue_number,
+  pullNumber,
+  onSubmit,
 }: {
-  issue_number: string;
+  pullNumber: string;
+  onSubmit: () => void;
 }) {
   return (
     <form
-      action={(formData) => addPlainComment(formData, issue_number)}
+      action={(formData) => {
+        addPlainComment(formData, pullNumber);
+        onSubmit();
+      }}
       className="flex flex-col gap-1"
     >
       <label htmlFor="comment" className="font-semibold text-lg mb-1">
