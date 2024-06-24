@@ -13,13 +13,13 @@ export const fetchRepositoryPullRequests = async (
       auth: session?.accessToken,
     });
 
-    const response = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
+    const response = await octokit.paginate("GET /repos/{owner}/{repo}/pulls", {
       owner: process.env.TARGET_REPO_OWNER!,
       repo: process.env.TARGET_REPO_NAME!,
       state: state,
     });
 
-    return response.data;
+    return response;
   } catch (error) {
     console.error("Error fetching repository pull requests:", error);
   }
@@ -58,7 +58,7 @@ export const fetchPullRequestComments = async (issue_number: number) => {
       auth: session?.accessToken,
     });
 
-    const response = await octokit.request(
+    const response = await octokit.paginate(
       "GET /repos/{owner}/{repo}/issues/{issue_number}/comments",
       {
         owner: process.env.TARGET_REPO_OWNER!,
@@ -67,7 +67,7 @@ export const fetchPullRequestComments = async (issue_number: number) => {
       }
     );
 
-    return response.data;
+    return response;
   } catch (error) {
     console.error("Error fetching pull request comments:", error);
   }
