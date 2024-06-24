@@ -1,6 +1,4 @@
 import Image from "next/image";
-import Button from "./Button";
-import { signIn } from "@/auth";
 
 export default function Welcome() {
   return (
@@ -13,16 +11,6 @@ export default function Welcome() {
         <h1 className="text-4xl">Weights Dashboard</h1>
         <p className="text-sm italic mt-3">Open Source For The Win</p>
       </div>
-
-      {/* Sign in button */}
-      <form
-        action={async () => {
-          "use server";
-          await signIn("github");
-        }}
-      >
-        <Button text="Sign in with GitHub" buttonType="submit" />
-      </form>
 
       {/* Related links */}
       <div className="w-full absolute bottom-6 left-0 right-0">
