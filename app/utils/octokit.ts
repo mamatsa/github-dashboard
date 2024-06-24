@@ -90,13 +90,17 @@ export async function createPullRequest({
   });
 
   try {
+    if (!session?.user?.name || !session?.accessToken) {
+      throw new Error("User not authenticated.");
+    }
+
     // Step 1: Check if the repository is already forked
     let forkOwner: string;
     let forkRepo: string;
 
     try {
       const forkResponse = await octokit.rest.repos.get({
-        owner: "authenticated_user", // Change to the authenticated user's GitHub username
+        owner: session.user.name,
         repo: process.env.TARGET_REPO_NAME!,
       });
 
