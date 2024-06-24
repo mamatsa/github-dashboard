@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { auth, signIn, signOut } from "@/auth";
-import { Button } from "@/app/components";
+import { Button, Welcome } from "@/app/components";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -50,10 +50,6 @@ export default async function RootLayout({
 }>) {
   let session = await auth();
   let user = session?.user?.name;
-  let sessionIsExpired =
-    session?.expires && session.expires < new Date().toISOString();
-
-  console.log(session);
 
   return (
     <html lang="en">
@@ -62,7 +58,7 @@ export default async function RootLayout({
           <div className="flex gap-4 items-center">
             <Link href="/">
               <Image
-                src="/mor.svg" // Path to the image in the public folder
+                src="/mor-logo.svg" // Path to the image in the public folder
                 alt="mor"
                 width={32}
                 height={32}
@@ -71,21 +67,16 @@ export default async function RootLayout({
               />
             </Link>
             <div className="w-full">
-              {user && !sessionIsExpired ? (
-                <SignOut>{`Welcome, ${user}`}</SignOut>
-              ) : (
-                <SignIn />
-              )}
+              {user ? <SignOut>{`Welcome, ${user}`}</SignOut> : <SignIn />}
             </div>
           </div>
           <div className="w-full h-px bg-neutral-600 mt-5"></div>
         </header>
 
-        {user && !sessionIsExpired && (
-          <main className="p-4 max-w-screen-2xl mx-auto sm:px-10 text-white">
-            {children}
-          </main>
-        )}
+        <main className="p-4 max-w-screen-2xl mx-auto sm:px-10 text-white">
+          {user && <>{children}</>}
+          {!user && <Welcome />}
+        </main>
       </body>
     </html>
   );

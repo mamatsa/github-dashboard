@@ -7,8 +7,11 @@ export const revalidate = 0;
 
 export default async function Home() {
   let session = await auth();
+  let pullRequests;
 
-  const pullRequests = await fetchRepositoryPullRequests("all");
+  if (session?.user) {
+    pullRequests = await fetchRepositoryPullRequests("all");
+  }
 
   return (
     <>
