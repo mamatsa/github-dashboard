@@ -4,6 +4,7 @@ import "./globals.css";
 import { auth, signIn, signOut } from "@/auth";
 import { Button } from "@/app/components";
 import Image from "next/image";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -59,14 +60,16 @@ export default async function RootLayout({
       <body className={inter.className}>
         <header className="w-full p-4 max-w-screen-2xl mx-auto sm:px-10 sm:py-6 text-white">
           <div className="flex gap-4 items-center">
-            <Image
-              src="/mor.svg" // Path to the image in the public folder
-              alt="mor"
-              width={100}
-              height={100}
-              className="h-10 w-auto"
-              priority={true}
-            />
+            <Link href="/">
+              <Image
+                src="/mor.svg" // Path to the image in the public folder
+                alt="mor"
+                width={32}
+                height={32}
+                className="h-8 w-auto"
+                priority={true}
+              />
+            </Link>
             <div className="w-full">
               {user && !sessionIsExpired ? (
                 <SignOut>{`Welcome, ${user}`}</SignOut>
