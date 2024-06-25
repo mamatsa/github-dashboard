@@ -14,11 +14,11 @@ export default function Welcome() {
 
       {/* Related links */}
       <div className="w-full absolute bottom-6 left-0 right-0">
-        <div className="flex flex-wrap gap-2 items-center justify-evenly max-w-screen-2xl mx-auto">
+        <div className="flex flex-wrap gap-2 items-center justify-evenly text-sm px-1 max-w-screen-2xl mx-auto sm:px-4">
           <a
             href="https://github.com/MorpheusAIs/Docs"
             target="_blank"
-            className="flex items-center gap-1 text-sm px-8"
+            className="flex items-center gap-1"
           >
             <Image
               src="/github-logo.svg"
@@ -32,7 +32,7 @@ export default function Welcome() {
           <a
             href="https://github.com/MorpheusAIs/Lite-Client"
             target="_blank"
-            className="flex items-center gap-1 text-sm px-8"
+            className="flex items-center gap-1"
           >
             <Image
               src="/github-logo.svg"
@@ -46,7 +46,7 @@ export default function Welcome() {
           <a
             href="https://discord.com/invite/morpheusai"
             target="_blank"
-            className="flex items-center gap-1 text-sm px-8"
+            className="flex items-center gap-1"
           >
             <Image
               src="/discord-logo.svg"
@@ -60,7 +60,7 @@ export default function Welcome() {
           <a
             href="https://mor.org/"
             target="_blank"
-            className="flex items-center gap-1 text-sm px-8"
+            className="flex items-center gap-1"
           >
             <Image src="/mor-logo.svg" alt="mor-logo" width={48} height={48} />
             <p>MOR.org</p>
@@ -69,7 +69,7 @@ export default function Welcome() {
           <a
             href="https://x.com/MorpheusAIs"
             target="_blank"
-            className="flex items-center gap-1 text-sm px-8"
+            className="flex items-center gap-1"
           >
             <Image
               src="/x-logo.png"
@@ -84,7 +84,7 @@ export default function Welcome() {
           <a
             href="https://www.reddit.com/r/MorpheusAI/"
             target="_blank"
-            className="flex items-center gap-1 text-sm px-8"
+            className="flex items-center gap-1"
           >
             <Image
               src="/reddit-logo.svg"
@@ -99,7 +99,7 @@ export default function Welcome() {
           <a
             href="https://t.me/MorpheusAI"
             target="_blank"
-            className="flex items-center gap-1 text-sm px-8"
+            className="flex items-center gap-1"
           >
             <Image
               src="/telegram-logo.svg"

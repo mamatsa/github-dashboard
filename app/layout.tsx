@@ -20,9 +20,9 @@ function SignIn() {
         "use server";
         await signIn("github");
       }}
-      className="w-full flex justify-between items-center"
+      className="w-full flex justify-between items-center gap-2"
     >
-      <p>You are not logged in</p>
+      <p className="text-sm sm:text-base">You are not logged in</p>
       <Button text="Sign in with GitHub" buttonType="submit" />
     </form>
   );
@@ -37,7 +37,7 @@ function SignOut({ children }: { children: React.ReactNode }) {
       }}
       className="w-full flex justify-between items-center"
     >
-      <p>{children}</p>
+      <p className="text-sm sm:text-base">{children}</p>
       <Button text="Sign Out" buttonType="submit" />
     </form>
   );
@@ -55,7 +55,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <header className="w-full p-4 max-w-screen-2xl mx-auto sm:px-10 sm:py-6 text-white">
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-2 items-center sm:gap-4">
             <Link href="/">
               <Image
                 src="/mor-logo.svg" // Path to the image in the public folder
