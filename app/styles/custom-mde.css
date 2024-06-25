@@ -32,7 +32,6 @@
 .editor-statusbar {
   background-color: #000;
   color: #fff;
-  margin-bottom: -20px;
 }
 
 .CodeMirror-cursor {

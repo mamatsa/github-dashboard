@@ -9,7 +9,15 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-export default function MarkdownField() {
+export default function MarkdownField({
+  id,
+  title,
+  desc,
+}: {
+  id: string;
+  title: string;
+  desc: string;
+}) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleEditorChange = (value: string) => {
@@ -20,11 +28,9 @@ export default function MarkdownField() {
 
   return (
     <div className="flex flex-col gap-4 mt-5">
-      <label htmlFor="content">
-        Content{" "}
-        <p className="text-sm text-gray-400">
-          Details of MRC in markdown format
-        </p>
+      <label htmlFor={id}>
+        {title}
+        <p className="text-sm text-gray-400">{desc}</p>
       </label>
       <SimpleMDE
         onChange={handleEditorChange}
@@ -36,8 +42,8 @@ export default function MarkdownField() {
       />
       <textarea
         ref={textareaRef}
-        name="content"
-        id="content"
+        name={id}
+        id={id}
         className="hidden"
       ></textarea>
     </div>

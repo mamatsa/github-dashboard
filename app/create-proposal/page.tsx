@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/app/components";
 import { submitProposal } from "./actions";
-import { MarkdownField, SubmitButton } from "./components";
+import { MarkdownField, SubmitButton, Deliverables } from "./components";
 import { redirect } from "next/navigation";
 
 export default function CreateProposal() {
@@ -87,8 +87,13 @@ export default function CreateProposal() {
           </select>
         </div>
 
-        <MarkdownField />
+        <MarkdownField
+          id="description"
+          title="Description"
+          desc="Details of MRC in markdown format"
+        />
 
+        <Deliverables />
         <SubmitButton />
       </form>
     </div>
